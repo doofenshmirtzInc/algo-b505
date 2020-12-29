@@ -1,0 +1,154 @@
+Jack McShane
+CSCI-B 505
+Applied Algorithms
+Homework 1
+
+###################PROBLEM 1###################
+
+'|' will denote the division between the sorted and unsorted array
+A = <31 41 59 26 41 58>     1
+    <31 | 41 59 26 41 58>, key = 41
+    <31 41 | 59 26 41 58>, key = 59
+    <31 41 59 | 26 41 58>, key = 26
+    <31 41 59 | 59 41 58>, key = 26
+    <31 41 41 | 59 41 58>, key = 26
+    <31 31 41 | 59 41 58>, key = 26
+    <26 31 41 59 | 41 58>, key = 41
+    <26 31 41 59 | 59 58>, key = 41
+    <26 31 41 41 59 | 58>, key = 58
+    <26 31 41 41 59 | 59>, key = 58
+    <26 31 41 41 58 59>
+
+Finally, A' = <26 31 41 41 58 59>
+
+
+###################PROBLEM 2###################
+
+PART A:
+
+Input: An
+Output: Index Out of Bounds error when attempting to access A[N]
+
+Here is code that verifies the above:
+
+#########################
+import sys
+
+def code(arr):
+    n = len(arr)
+    for j in range(1, n - 1):
+        if arr[n - 1] < arr[j]:
+            temp = arr[j]
+            arr[j] = arr[n - 1]
+            arr[n - 1] = temp
+
+
+
+arr = []
+infile = sys.stdin.readlines()
+for line in infile:
+    arr.append(int(line))
+
+print(f'before code applied: {arr}')
+
+code(arr)
+print(f'after code applied: {arr}')
+###############################
+
+
+Assuming that A[N] is meant to represent accessing the last element of the array,
+the output of the algorithm changes.
+
+Output (assuming A[N] accesses last element of the array): a mutated An array where
+elements have been rearranged, but not sorted in any particular fashion
+
+PART B:
+
+Runtime: O(n) linear
+Justification:
+    for j in range(1, n - 1):       --> O(n)
+        if arr[n - 1] < arr[j]:     --> O(1)
+            temp = arr[j]           --> O(1)
+            arr[j] = arr[n - 1]     --> O(1)
+            arr[n - 1] = temp       --> O(1)
+
+O(n) + O(1) + O(1) + O(1) + O(1) = O(n)
+
+
+
+###################PROBLEM 3###################
+
+Runtime: O(n^2), runtime is quadratic
+Justification:
+
+    int foo(int n){
+        int i,j,k = 0;                  --> 3 mem allocations --> O(1)
+        for(i = n/2; i<=n; i++){        --> runs (1/2)*n times --> O(n)
+            for(j=2; j<=n; j=j*2){      --> runs const*n times --> O(n)
+                k += n/2;               --> assign statement --> O(1)
+            }
+        }
+        return k;                       --> return statement --> O(1)
+    }
+
+f(n) = O(1) + O(n)*O(n)*O(1) + O(1)
+f(n) = O(n^2)
+
+
+###################PROBLEM 4###################
+
+lim(n->inf)[1/n] = 0, therefore, f(n) approaches 0 as n approaches inf.
+Consequently, for all multipliers greater than 0 (c > 0), f(n) <= c*O(1).
+Therefore, f(n) = 1/n is contained within O(1).
+
+###################PROBLEM 5###################
+
+PART A: g(n) = O(h(n))
+
+g(n) = n^3
+h(n) = n^3 + 4n
+
+O(h(n)) = n^3
+Therefore, g(n) = O(h(n)) = n^3
+
+
+PART B: g(n) != O(h(n))
+
+g(n) = 2n + 1
+h(n) = 7n - 6
+
+O(h(n)) = n
+Therefore, g(n) != n
+
+###################PROBLEM 6###################
+
+1. log(n) = O(n), as n grows faster than log(n)
+2. n^2 = O(2^n), as 2^n grows much faster than n^2
+3. 2^n = O(3^n), both are exponentials, but 3^n approaches inf fasster than 2^n
+4. log(n) = O(log(n)^2), log(n)^2 will grow faster than log(n) in the same fashion
+    as x^2 when compared with x
+
+###################PROBLEM 7###################
+
+
+import random
+
+def reorder(arr):
+    reordered = []
+    while len(arr) > 0:
+        #generate rand index
+        r = random.randint(0, len(arr)-1)
+        #append elem at rand index to the reordered array
+        reordered.append(arr[r])
+        #remove selected elem from input arr
+        arr.remove(arr[r])
+    return reordered
+
+#test code
+a = [random.randint(1, 50)]
+for j in range(20):
+    a.append(random.randint(0, 50))
+print(a)
+
+new_arr = reorder(a)
+print(new_arr)

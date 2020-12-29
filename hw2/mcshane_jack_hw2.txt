@@ -1,0 +1,85 @@
+#Author: Jack Mcshane
+#Applied Algorithms
+#Homework Assignment 2
+
+1. ALGORITHM:
+-create a hashmap out of the first array: O(n)
+    -accessing elements of this map takes O(1) time
+-iterate through each array, checking if the i-th element is in the hashmap
+    -if not, add to hashmap
+    -search through n elements for k-1 arrays: takes O([k-1]n) time
+number of distinct elements = length of hashmap
+    -takes O(1)
+
+Tot runtime: O(n) + O(1) + O(k-1)*O(n) + O(1) = O(kn)
+
+PSEUDOCODE:
+hashmap <- array1
+for array2 to arrayn
+    for elem in array
+        if elem not in hashmap
+            hashmap += elem
+num_distinct_int = len(hashmap)
+
+2. PSUEDOCODE
+for i=0 to len(array)-1
+    if array[i] != i
+        return i
+
+3.a) Inversions in <2, 3, 8, 6, 1>: (0,4) (1,4) (2,4) (3,4) (2,3)
+b) the best ordering to achieve the maximum number of inversions is reverse order.
+An array in this order will have [SUM(i) from i=1 to n-1] inversions
+c) the number of inversions is the factor which takes insertion sort from an O(n)
+algorithm (best-case) to an O(n^2) algorigthm (worst-case).  The nested loop in
+the algorithm moves linearly through the array checking for inversions.
+While there exists some inversion, a swap of the corresponding elements is made
+and the loop progresses.  In the case that there are few to no inversions, the
+runtime of the insertion sort algorithm is O(n). In the worst case where there
+is a maximum number of inversions, the runtime of the algorithm is O(n^2).
+
+
+4. I had trouble thinking of an algorithm that would provide the functionality
+at O(logm + logn) runtime, but didn't want to leave the question blank.  This
+should run with O(k) time
+
+PSEUDOCODE
+def find_kth_elem(a1, a2):
+    union <- empty array
+    index1 <- 0
+    index2 <- 0
+    while length(union) != k:
+        if a1[index1] <= a2[index2]:
+            append a1[index1] to union
+            increment index1
+        else:
+            append a2[index2] to union
+            increment index2
+
+    return union[k]
+
+
+5. Using the Master Theorem:
+a) a = 1, b = 2, d = 1
+    logb(a) = 0, d > 0
+    therefore, runtime is: O(n^d) = O(n)
+
+b) a = 1, b = 5, d = 2
+    logb(a) = 0, d > 0
+    therefore, runtime is: O(n^d) = O(n^2)
+
+c) a = 1, b = 3, d = 0
+    logb(a) = 0, d = logb(a) = 0
+    therefore, runtime is: O((n^d)*logn = O(logn)
+
+
+6. a) for a nearly sorted array, I would use the insertion sort algorithm.  As
+the array is nearly sorted, it is same to assume there is a minimal number of
+inversions, leaving the runtime of the algorithm close to O(n) as opposed to the
+runtime of the merge sort algorithm with runtime of O(nlogn)
+
+b) For a randomly arranged array, worst-case will be assumed.  For this
+scenario, I would elect to use the merge sort algorithm as it has a runtime of
+O(nlogn) in the worst case scenario, whereas an algorithm such as insertion sort
+has a runtime of O(n^2) in the worst case.
+
+
